@@ -47,3 +47,11 @@ class TestToNormalize(object):
     def test_to_normalize_lon(self, lon, expected, expectation):
         with expectation:
             assert stack_route._to_normalize(d=lon, is_lon=True) == expected
+
+    @pytest.mark.parametrize('d, is_lon, up, expectation',
+                             [(-000.000000000001, False, 180, pytest.raises(StackRouteException)),
+                              (-000.000000000001, True, 360, pytest.raises(StackRouteException))])
+    def test_to_normalize_err_message(self, d, is_lon, up, expectation):
+        with expectation as e:
+            stack_route._to_normalize(d=d, is_lon=is_lon)
+        assert f'{d} is range 0 to {up} out of bounds.' in e.value.args[0]

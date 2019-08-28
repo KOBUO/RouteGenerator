@@ -35,7 +35,13 @@ class TestStackDs(object):
     ]
 
     @pytest.mark.parametrize('at, ut, ad,expected,expectation', data)
-    def test_stack_ds_eps_default(self, at, ut, ad, expected, expectation):
+    def test_stack_ds(self, at, ut, ad, expected, expectation):
         with expectation:
             actual = stack_route._stack_ds(at=at, ut=ut, ad=ad)
             assert actual == expected
+
+    @pytest.mark.parametrize('at, ut, ad, expectation', [(0, 1, 2, pytest.raises(StackRouteException))])
+    def test_stack_ds_err_message(self, at, ut, ad, expectation):
+        with expectation as e:
+            stack_route._stack_ds(at=at, ut=ut, ad=ad)
+        assert f'at:{at} or ut:{ut} or ad:{ad} is 0 or less.' in e.value.args[0]

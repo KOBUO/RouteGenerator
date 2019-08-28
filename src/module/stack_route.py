@@ -94,7 +94,7 @@ def _stack_ds(at, ut, ad):
         StackRouteOutOfBoundsException: If _t or _ut or _ds is 0 or less
     """
     if min(at, ut, ad) <= 0:
-        raise StackRouteException(f't:{at} or ut:{ut} or ds:{ad} is 0 or less.')
+        raise StackRouteException(f'at:{at} or ut:{ut} or ad:{ad} is 0 or less.')
     u = int(math.ceil(at / ut))
     q, mod = divmod(ad, u)
     print(q, mod)
